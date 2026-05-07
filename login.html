@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ShifaCare secure sign in for hospital operations dashboard.">
+    <title>شفاء كير | تسجيل الدخول</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
+    <main class="auth-layout">
+        <section class="auth-panel auth-brand-panel">
+            <div class="auth-brand-top">
+                <span class="hero-badge">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Secure Access
+                </span>
+                <div class="auth-logo">
+                    <div class="logo-box">
+                        <i class="fa-solid fa-hospital-user logo-icon"></i>
+                    </div>
+                    <div>
+                        <h1>شفاء كير</h1>
+                        <p>منصة إدارة المستشفى والعمليات الطبية</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="auth-copy">
+                <h2>دخول آمن إلى مركز قيادة المستشفى</h2>
+                <p>
+                    الوصول إلى المرضى، المواعيد، الأقسام، والمالية من واجهة تشغيل موحدة
+                    مصممة للإدارة الطبية والفرق التنفيذية.
+                </p>
+            </div>
+
+            <div class="auth-feature-list">
+                <article class="auth-feature">
+                    <i class="fa-solid fa-wave-square"></i>
+                    <div>
+                        <h3>مراقبة تشغيلية مباشرة</h3>
+                        <p>متابعة السعة، الانتظار، والأولويات الحرجة من لوحة واحدة.</p>
+                    </div>
+                </article>
+                <article class="auth-feature">
+                    <i class="fa-solid fa-user-doctor"></i>
+                    <div>
+                        <h3>تنسيق الفرق الطبية</h3>
+                        <p>رؤية أوضح لتوزيع الأطباء والمواعيد والأقسام الحيوية.</p>
+                    </div>
+                </article>
+                <article class="auth-feature">
+                    <i class="fa-solid fa-file-shield"></i>
+                    <div>
+                        <h3>وصول منظم للبيانات</h3>
+                        <p>تهيئة دخول منفصلة قبل الوصول إلى لوحة الإدارة الداخلية.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="auth-panel auth-form-panel">
+            <div class="auth-form-head">
+                <span class="section-label">تسجيل الدخول</span>
+                <h2>ابدأ جلستك الآن</h2>
+                <p>أدخل اسم المستخدم أو البريد الوظيفي وكلمة المرور للانتقال إلى لوحة التحكم.</p>
+            </div>
+
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-identifier">اسم المستخدم أو البريد الوظيفي</label>
+                    <input type="text" id="login-identifier" placeholder="مثال: ahmed.mahmoud أو ahmed@shifacare.com" autocomplete="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">كلمة المرور</label>
+                    <input type="password" id="login-password" placeholder="أدخل كلمة المرور" autocomplete="current-password" required>
+                </div>
+
+                <div class="auth-form-row">
+                    <label class="remember-box">
+                        <input type="checkbox" id="remember-session" checked>
+                        <span>تذكر الجلسة على هذا الجهاز</span>
+                    </label>
+                    <span class="auth-helper">نسخة عرض front-end للمشروع</span>
+                </div>
+
+                <div class="auth-error" id="login-error" aria-live="polite"></div>
+
+                <button type="submit" class="btn-primary auth-submit">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    دخول إلى لوحة التحكم
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <script src="auth.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>
