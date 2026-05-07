@@ -85,6 +85,10 @@ body {
     position: relative;
 }
 
+body.sidebar-open {
+    overflow: hidden;
+}
+
 body::before {
     content: '';
     position: fixed;
@@ -367,6 +371,18 @@ img {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 10, 20, 0.42);
+    backdrop-filter: blur(3px);
+    border: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition);
+    z-index: 930;
+}
+
 .logout {
     display: inline-flex;
     align-items: center;
@@ -418,6 +434,12 @@ body.dark-mode .top-header {
     align-items: center;
 }
 
+.header-intro,
+.profile-details,
+.search-result-text {
+    min-width: 0;
+}
+
 .top-header-left {
     gap: 16px;
     min-width: 0;
@@ -426,6 +448,9 @@ body.dark-mode .top-header {
 .top-header-right {
     gap: 20px;
     min-width: 0;
+    flex: 1;
+    justify-content: flex-end;
+    flex-wrap: wrap;
 }
 
 .header-intro .eyebrow,
@@ -459,6 +484,8 @@ body.dark-mode .top-header {
     align-items: center;
     gap: 12px;
     width: min(420px, 42vw);
+    max-width: 100%;
+    min-width: 0;
     padding: 14px 18px;
     border-radius: 18px;
     background: var(--surface-main);
@@ -492,6 +519,9 @@ body.dark-mode .top-header {
 
 .user-info {
     gap: 16px;
+    min-width: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .clock-box {
@@ -569,6 +599,8 @@ body.dark-mode .top-header {
     box-shadow: var(--shadow-sm);
     cursor: pointer;
     transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    min-width: 0;
+    max-width: 100%;
 }
 
 .profile:hover {
@@ -588,12 +620,14 @@ body.dark-mode .top-header {
 .profile-details h4 {
     font-size: 14px;
     font-weight: 800;
+    overflow-wrap: anywhere;
 }
 
 .profile-details p {
     color: var(--text-muted);
     font-size: 12px;
     font-weight: 700;
+    overflow-wrap: anywhere;
 }
 
 .content-wrapper {
@@ -640,6 +674,7 @@ body.dark-mode .top-header {
     display: inline-flex;
     align-items: center;
     gap: 9px;
+    max-width: 100%;
     padding: 11px 14px;
     border-radius: 16px;
     background: var(--surface-main);
@@ -1100,6 +1135,14 @@ td {
     border-top: 1px solid var(--border);
     font-size: 14px;
     vertical-align: middle;
+}
+
+td > * {
+    min-width: 0;
+}
+
+.table-responsive.is-stacked td::before {
+    content: none;
 }
 
 tbody tr {
@@ -1866,6 +1909,7 @@ body.dark-mode .form-group select {
         align-items: stretch;
     }
 
+    .top-header-left,
     .top-header-right {
         justify-content: space-between;
         flex-wrap: wrap;
@@ -1886,6 +1930,11 @@ body.dark-mode .form-group select {
     .hero-side-grid {
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     }
+
+    .auth-brand-panel,
+    .auth-form-panel {
+        padding: 28px 24px;
+    }
 }
 
 @media (max-width: 1100px) {
@@ -1903,6 +1952,11 @@ body.dark-mode .form-group select {
 
     .mobile-menu-toggle {
         display: grid;
+    }
+
+    body.sidebar-open .sidebar-overlay {
+        opacity: 1;
+        pointer-events: auto;
     }
 }
 
@@ -1922,10 +1976,20 @@ body.dark-mode .form-group select {
         font-size: 26px;
     }
 
+    .top-header-left,
+    .top-header-right,
     .user-info {
         width: 100%;
         justify-content: space-between;
         flex-wrap: wrap;
+    }
+
+    .top-header-right {
+        gap: 16px;
+    }
+
+    .search-bar {
+        width: 100%;
     }
 
     .profile {
@@ -1947,6 +2011,75 @@ body.dark-mode .form-group select {
         flex-direction: column;
         align-items: flex-start;
     }
+
+    .header-status-row {
+        align-items: stretch;
+    }
+
+    .status-banner {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 720px) {
+    .table-responsive.is-stacked {
+        overflow: visible;
+        padding: 14px 16px 18px;
+    }
+
+    .table-responsive.is-stacked table,
+    .table-responsive.is-stacked tbody,
+    .table-responsive.is-stacked tr,
+    .table-responsive.is-stacked td {
+        display: block;
+        width: 100%;
+    }
+
+    .table-responsive.is-stacked thead {
+        display: none;
+    }
+
+    .table-responsive.is-stacked tbody {
+        display: grid;
+        gap: 12px;
+    }
+
+    .table-responsive.is-stacked tr {
+        padding: 14px 16px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.52);
+        box-shadow: var(--shadow-sm);
+    }
+
+    body.dark-mode .table-responsive.is-stacked tr {
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .table-responsive.is-stacked td {
+        border-top: none;
+        padding: 9px 0;
+        display: grid;
+        grid-template-columns: minmax(92px, 112px) minmax(0, 1fr);
+        gap: 12px;
+        align-items: start;
+    }
+
+    .table-responsive.is-stacked td::before {
+        content: attr(data-label);
+        color: var(--text-soft);
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    .table-responsive.is-stacked td:empty {
+        display: none;
+    }
+
+    .table-responsive.is-stacked .table-user {
+        align-items: flex-start;
+    }
 }
 
 @media (max-width: 640px) {
@@ -1966,6 +2099,12 @@ body.dark-mode .form-group select {
         padding: 20px;
     }
 
+    .hero-side-grid,
+    .stats-grid,
+    .profile-meta-grid {
+        grid-template-columns: 1fr;
+    }
+
     .department-grid,
     .timeline-list,
     .priority-list {
@@ -1981,7 +2120,8 @@ body.dark-mode .form-group select {
 
     .hero-actions,
     .page-actions,
-    .status-chip-group {
+    .status-chip-group,
+    .metric-chip {
         width: 100%;
     }
 
@@ -1989,6 +2129,14 @@ body.dark-mode .form-group select {
     .hero-actions .btn-outline,
     .page-actions .btn-primary,
     .page-actions .btn-outline {
+        width: 100%;
+    }
+
+    .page-header {
+        align-items: stretch;
+    }
+
+    .page-actions {
         width: 100%;
     }
 
@@ -2014,5 +2162,45 @@ body.dark-mode .form-group select {
     .timeline-item.compact {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .auth-logo {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-header {
+        padding-top: 18px;
+        padding-bottom: 16px;
+    }
+
+    .header-intro h1,
+    .page-header h2,
+    .hero-copy h2,
+    .auth-form-head h2 {
+        font-size: 22px;
+    }
+
+    .header-intro p,
+    .hero-copy p,
+    .page-header p {
+        font-size: 13px;
+    }
+
+    .profile {
+        justify-content: flex-start;
+    }
+
+    .profile-details {
+        flex: 1;
+    }
+
+    .toast {
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        width: auto;
+        justify-content: center;
     }
 }

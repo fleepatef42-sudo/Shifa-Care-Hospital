@@ -101,7 +101,7 @@ const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (match) => ({
 function requireAuth() {
     if (authApi?.isAuthenticated()) return authApi.get();
 
-    window.location.replace('login.html');
+    window.location.replace('index.html');
     return null;
 }
 
@@ -124,6 +124,33 @@ function syncProfileFromAuth(authState) {
         profileAvatar.src = getAvatar(safeName);
         profileAvatar.alt = safeName;
     }
+}
+
+function syncSidebarState(isOpen) {
+    const sidebar = document.querySelector('.sidebar');
+    if (!sidebar) return;
+
+    const shouldOpen = typeof isOpen === 'boolean' ? isOpen : sidebar.classList.contains('open');
+    sidebar.classList.toggle('open', shouldOpen);
+    document.body.classList.toggle('sidebar-open', shouldOpen && window.innerWidth <= 1100);
+}
+
+function prepareResponsiveTables(scope = document) {
+    const wrappers = scope.querySelectorAll('.table-responsive');
+    wrappers.forEach((wrapper) => {
+        const table = wrapper.querySelector('table');
+        const headers = [...wrapper.querySelectorAll('thead th')].map((header) => header.textContent.trim());
+        const rows = wrapper.querySelectorAll('tbody tr');
+
+        if (!table || !headers.length || !rows.length) return;
+
+        wrapper.classList.add('is-stacked');
+        rows.forEach((row) => {
+            [...row.children].forEach((cell, index) => {
+                cell.setAttribute('data-label', headers[index] || '');
+            });
+        });
+    });
 }
 
 const statusMaps = {
@@ -904,6 +931,7 @@ function loadView(viewName) {
         if (viewName === 'add-invoice') initInvoiceForm();
         if (viewName === 'add-item') initInventoryForm();
         if (viewName === 'add-appointment') initAppointmentForm();
+        prepareResponsiveTables(container);
 
         document.querySelectorAll('.sidebar .nav-links li').forEach((item) => item.classList.remove('active'));
         const activeNav = document.querySelector(`.sidebar [data-view="${viewName}"]`);
@@ -1126,8 +1154,8 @@ function toggleSidebar(force) {
     const sidebar = document.querySelector('.sidebar');
     if (!sidebar) return;
 
-    if (force !== undefined) sidebar.classList.toggle('open', force);
-    else sidebar.classList.toggle('open');
+    const shouldOpen = typeof force === 'boolean' ? force : !sidebar.classList.contains('open');
+    syncSidebarState(shouldOpen);
 }
 
 function toggleTheme() {
@@ -1139,7 +1167,7 @@ function toggleTheme() {
 function logout() {
     if (window.confirm('هل تريد تسجيل الخروج من لوحة التحكم؟')) {
         authApi?.clear();
-        window.location.replace('login.html');
+        window.location.replace('index.html');
     }
 }
 
@@ -1223,6 +1251,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('shifacare-theme');
     if (savedTheme === 'dark') document.body.classList.add('dark-mode');
     updateThemeIcon();
+    syncSidebarState(false);
 
     loadView('dashboard');
     updateClock();
@@ -1273,6 +1302,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!event.target.closest('.search-bar') && results) {
             results.style.display = 'none';
+        }
+
+        if (event.target.closest('.sidebar-overlay')) {
+            toggleSidebar(false);
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1100) {
+            syncSidebarState(false);
         }
     });
 });

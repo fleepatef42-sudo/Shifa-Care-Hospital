@@ -1,5 +1,5 @@
 (function () {
-    const AUTH_KEY = 'shifacare-auth';
+    const AUTH_KEY = 'shifacare-auth-v2';
 
     function readStorage(storage) {
         try {

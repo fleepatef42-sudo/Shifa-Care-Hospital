@@ -20,13 +20,13 @@ function buildUserPayload(identifier) {
         name: displayName,
         role: 'مدير النظام',
         email: identifier.includes('@') ? identifier.trim() : `${identifier.trim()}@shifacare.local`,
-        remember: document.getElementById('remember-session')?.checked ?? true
+        remember: document.getElementById('remember-session')?.checked ?? false
     };
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     if (authApi?.isAuthenticated()) {
-        window.location.replace('index.html');
+        window.location.replace('dashboard.html');
         return;
     }
 
@@ -55,6 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         errorBox.textContent = '';
         authApi?.set(buildUserPayload(identifier));
-        window.location.replace('index.html');
+        window.location.replace('dashboard.html');
     });
 });
