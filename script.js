@@ -13,7 +13,7 @@ const state = {
         occupancyRate: 78,
         avgWait: 11,
         satisfaction: 94,
-        readiness: 96,
+        serviceLevel: 96,
         doctorsOnDuty: 27,
         emergencyOpen: 8
     },
@@ -229,9 +229,9 @@ const renderViews = () => ({
 
                 <div class="hero-side-grid">
                     <div class="hero-mini-card">
-                        <span>جاهزية التشغيل</span>
-                        <strong>${numberFormatter.format(state.summary.readiness)}%</strong>
-                        <small>جاهزية ممتازة مع بقاء 3 أولويات مفتوحة فقط</small>
+                        <span>مستوى الخدمة</span>
+                        <strong>${numberFormatter.format(state.summary.serviceLevel)}%</strong>
+                        <small>أداء مستقر مع متابعة 3 أولويات تشغيلية</small>
                     </div>
                     <div class="hero-mini-card">
                         <span>رضا المراجعين</span>

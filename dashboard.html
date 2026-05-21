@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ShifaCare dashboard for managing patients, appointments, departments, and hospital operations in a clean professional interface.">
+    <title>شفاء كير | منصة إدارة المستشفى</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <i class="fa-solid fa-hospital-user logo-icon"></i>
+                </div>
+                <div>
+                    <h2>شفاء<span>كير</span></h2>
+                    <p>مركز قيادة العمليات الطبية</p>
+                </div>
+            </div>
+
+            <div class="sidebar-meta">
+                <span class="sidebar-pill">
+                    <i class="fa-solid fa-shield-heart"></i>
+                    تشغيل مباشر
+                </span>
+                <p>لوحة موحدة لإدارة المرضى، الفرق الطبية، والقرارات التشغيلية اليومية.</p>
+            </div>
+
+            <div class="sidebar-menu">
+                <p class="menu-label">لوحة التحكم</p>
+                <ul class="nav-links">
+                    <li class="active">
+                        <a href="#" class="nav-item" data-view="dashboard">
+                            <i class="fa-solid fa-chart-line"></i>
+                            لوحة القيادة
+                        </a>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#" class="nav-item">
+                            <i class="fa-solid fa-user-injured"></i>
+                            شؤون المرضى
+                            <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="#" data-view="add-patient">إضافة مريض جديد</a></li>
+                            <li><a href="#" data-view="patients-list">قائمة المرضى</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#" class="nav-item">
+                            <i class="fa-solid fa-user-doctor"></i>
+                            الطاقم الطبي
+                            <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="#" data-view="add-doctor">تسجيل طبيب جديد</a></li>
+                            <li><a href="#" data-view="doctors-dir">دليل الأطباء</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#" class="nav-item" data-view="appointments">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            المواعيد
+                        </a>
+                    </li>
+                </ul>
+
+                <p class="menu-label">الإدارة والموارد</p>
+                <ul class="nav-links">
+                    <li>
+                        <a href="#" class="nav-item" data-view="billing">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                            المالية والحسابات
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item" data-view="inventory">
+                            <i class="fa-solid fa-capsules"></i>
+                            المخزون والأدوية
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item" data-view="departments">
+                            <i class="fa-solid fa-building-circle-check"></i>
+                            الأقسام الطبية
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="#" class="logout" onclick="logout()">
+                    <i class="fa-solid fa-power-off"></i>
+                    تسجيل الخروج
+                </a>
+            </div>
+        </aside>
+        <button class="sidebar-overlay" type="button" onclick="toggleSidebar(false)" aria-label="إغلاق القائمة"></button>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="top-header-left">
+                    <button class="icon-btn mobile-menu-toggle" onclick="toggleSidebar()" aria-label="فتح القائمة">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <div class="header-intro">
+                        <span class="eyebrow">ShifaCare Command Center</span>
+                        <h1>إدارة تشغيل المستشفى</h1>
+                        <p>متابعة السعة التشغيلية، جودة الخدمة، والفرق الطبية من شاشة تنفيذية واحدة.</p>
+                    </div>
+                </div>
+
+                <div class="top-header-right">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="global-search" placeholder="ابحث عن مريض أو طبيب أو قسم..." aria-label="بحث سريع">
+                        <div id="search-results" class="search-results"></div>
+                    </div>
+
+                    <div class="user-info">
+                        <div class="clock-box">
+                            <div class="clock" id="live-clock">00:00:00</div>
+                            <div class="date" id="live-date">تحميل...</div>
+                        </div>
+
+                        <div class="header-actions">
+                            <button class="icon-btn" onclick="toggleTheme()" aria-label="تبديل المظهر">
+                                <i class="fa-solid fa-moon" id="theme-icon"></i>
+                            </button>
+
+                            <div class="notifications">
+                                <button class="icon-btn" onclick="toggleNotifications()" aria-label="الإشعارات">
+                                    <i class="fa-solid fa-bell"></i>
+                                    <span class="badge">3</span>
+                                </button>
+                                <div class="notif-dropdown" id="notif-dropdown"></div>
+                            </div>
+                        </div>
+
+                        <div class="profile" onclick="loadView('profile')">
+                            <img src="https://ui-avatars.com/api/?name=Ahmed+Mahmoud&background=0F6CBD&color=fff&bold=true" alt="Profile" class="profile-img" id="profile-avatar">
+                            <div class="profile-details">
+                                <h4 id="profile-name">د. أحمد محمود</h4>
+                                <p id="profile-role">مدير النظام</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="header-status-row">
+                    <div class="status-banner">
+                        <span class="status-dot"></span>
+                        متابعة العمليات اليومية
+                    </div>
+
+                    <div class="status-chip-group">
+                        <div class="metric-chip">
+                            <i class="fa-solid fa-ambulance"></i>
+                            8 حالات طارئة مفتوحة
+                        </div>
+                        <div class="metric-chip">
+                            <i class="fa-solid fa-stethoscope"></i>
+                            27 طبيبًا على رأس العمل
+                        </div>
+                        <div class="metric-chip">
+                            <i class="fa-solid fa-bed-pulse"></i>
+                            42 سريرًا متاحًا
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-container"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
