@@ -2204,3 +2204,42 @@ body.dark-mode .form-group select {
         justify-content: center;
     }
 }
+
+@media (min-width: 1440px) {
+    .dashboard-container {
+        max-width: 1760px;
+        margin-inline: auto;
+    }
+
+    .stats-grid,
+    .departments-grid,
+    .cards-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .top-header,
+    .header-status-row,
+    .status-chip-group,
+    .hero-actions,
+    .form-actions {
+        align-items: stretch;
+    }
+
+    .btn-primary,
+    .btn-outline,
+    .form-actions button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .metric-chip,
+    .status-banner {
+        width: 100%;
+    }
+
+    .profile-details {
+        display: none;
+    }
+}
