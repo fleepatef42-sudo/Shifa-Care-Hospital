@@ -2243,3 +2243,91 @@ body.dark-mode .form-group select {
         display: none;
     }
 }
+
+/* Compact fixed sidebar/header across small, large, and XL screens */
+@media (max-width: 640px) {
+    .sidebar {
+        width: min(280px, calc(100vw - 32px));
+        padding: 16px 12px;
+    }
+
+    .sidebar-header {
+        gap: 10px;
+        padding: 6px 8px 12px;
+    }
+
+    .logo-box {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+    }
+
+    .sidebar-header h2 {
+        font-size: 21px;
+    }
+
+    .sidebar-meta {
+        margin: 0 6px 12px;
+        padding: 12px;
+    }
+
+    .nav-item {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+
+    .top-header {
+        padding: 12px 14px;
+        gap: 12px;
+    }
+
+    .mobile-menu-toggle {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+    :root {
+        --sidebar-width: 282px;
+    }
+
+    .sidebar {
+        padding: 18px 14px;
+    }
+
+    .sidebar-header {
+        padding: 6px 10px 14px;
+    }
+
+    .logo-box {
+        width: 48px;
+        height: 48px;
+    }
+
+    .sidebar-header h2 {
+        font-size: 23px;
+    }
+
+    .nav-item {
+        padding: 11px 13px;
+    }
+
+    .top-header {
+        padding: 18px 26px 14px;
+    }
+}
+
+@media (min-width: 1440px) {
+    :root {
+        --sidebar-width: 288px;
+    }
+
+    .sidebar {
+        padding: 20px 16px;
+    }
+
+    .top-header {
+        padding: 18px 30px 14px;
+    }
+}
